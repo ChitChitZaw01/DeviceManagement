@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DeviceManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="T_Customers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RegistDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="T_Devices">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SerialNo" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="ModelCode" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="RegistDateTime" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__T_Devices__Custo__276EDEB3">
+          <End Role="T_Customers" Type="Self.T_Customers" Multiplicity="1" />
+          <End Role="T_Devices" Type="Self.T_Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Customers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_Devices">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DeviceManagementModelStoreContainer">
+          <EntitySet Name="T_Customers" EntityType="Self.T_Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Devices" EntityType="Self.T_Devices" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__T_Devices__Custo__276EDEB3" Association="Self.FK__T_Devices__Custo__276EDEB3">
+            <End Role="T_Customers" EntitySet="T_Customers" />
+            <End Role="T_Devices" EntitySet="T_Devices" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DeviceManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="T_Customers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RegistDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="T_Devices" Relationship="Self.FK__T_Devices__Custo__276EDEB3" FromRole="T_Customers" ToRole="T_Devices" />
+        </EntityType>
+        <EntityType Name="T_Devices">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SerialNo" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModelCode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="RegistDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="T_Customers" Relationship="Self.FK__T_Devices__Custo__276EDEB3" FromRole="T_Devices" ToRole="T_Customers" />
+        </EntityType>
+        <Association Name="FK__T_Devices__Custo__276EDEB3">
+          <End Role="T_Customers" Type="Self.T_Customers" Multiplicity="1" />
+          <End Role="T_Devices" Type="Self.T_Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_Customers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="T_Devices">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DeviceManagementEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_Customers" EntityType="Self.T_Customers" />
+          <EntitySet Name="T_Devices" EntityType="Self.T_Devices" />
+          <AssociationSet Name="FK__T_Devices__Custo__276EDEB3" Association="Self.FK__T_Devices__Custo__276EDEB3">
+            <End Role="T_Customers" EntitySet="T_Customers" />
+            <End Role="T_Devices" EntitySet="T_Devices" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DeviceManagementModelStoreContainer" CdmEntityContainer="DeviceManagementEntities2">
+          <EntitySetMapping Name="T_Customers">
+            <EntityTypeMapping TypeName="DeviceManagementModel.T_Customers">
+              <MappingFragment StoreEntitySet="T_Customers">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RegistDateTime" ColumnName="RegistDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Devices">
+            <EntityTypeMapping TypeName="DeviceManagementModel.T_Devices">
+              <MappingFragment StoreEntitySet="T_Devices">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+                <ScalarProperty Name="ModelCode" ColumnName="ModelCode" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="RegistDateTime" ColumnName="RegistDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
